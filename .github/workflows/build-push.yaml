@@ -23,11 +23,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -35,8 +30,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            mawinkler/astrolive:latest
-            ghcr.io/mawinkler/astrolive:latest
+            ghcr.io/usa-reddragon/astrolive:latest
 
       - name: Vision One Container Security Scan Action
         uses: trendmicro/tmas-scan-action@1.0.10
@@ -48,7 +42,7 @@ jobs:
             # Optional
             SBOM: true # Saves SBOM to SBOM.json so you can export it as an artifact later.
             MALWARE_SCAN: true # Enable malware scan.
-            IMAGE: mawinkler/astrolive:latest # The image need to be public or the pipeline need to have access to the private image of choice.
+            IMAGE: ghcr.io/usa-reddragon/astrolive:latest # The image need to be public or the pipeline need to have access to the private image of choice.
             # LOCAL_IMAGE_TARBALL: image.tar
             # For each threshold below, select the maximum number of vulnerabilities that are acceptable.
             MAX_TOTAL: 1000
